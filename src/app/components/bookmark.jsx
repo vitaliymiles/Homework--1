@@ -1,10 +1,11 @@
 import React from 'react'
 
-const BookMark = ({ status, ...rest }) => {
-  return status === { ...rest } ? (
-    <i class="bi bi-star"></i>
-  ) : (
-    <i class="bi bi-star-fill"></i>
+const BookMark = ({ status, onToggleBookMark, _id }) => {
+  return (
+    <i
+      onClick={() => onToggleBookMark(_id)}
+      class={status ? 'bi bi-star-fill' : 'bi bi-star'}
+    ></i>
   )
 }
 
