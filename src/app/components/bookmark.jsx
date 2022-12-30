@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const BookMark = ({ status, onToggleBookMark, _id }) => {
-  return (
-    <i
-      onClick={() => onToggleBookMark(_id)}
-      class={status ? 'bi bi-star-fill' : 'bi bi-star'}
-    ></i>
-  )
-}
+const BookMark = ({ status, ...rest }) => {
+    return (
+        <button {...rest}>
+            <i className={"bi bi-bookmark" + (status ? "-heart-fill" : "")}></i>
+        </button>
+    );
+};
 
-export default BookMark
+export default BookMark;
