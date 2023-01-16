@@ -1,6 +1,6 @@
-import React from "react";
-import Qualitie from "./qualitie";
-import BookMark from "./bookmark";
+import React from 'react'
+import Qualitie from './qualitie'
+import BookMark from './bookmark'
 const User = ({
     _id,
     name,
@@ -10,7 +10,7 @@ const User = ({
     rate,
     onDelete,
     bookmark,
-    onToggleBookMark,
+    onToggleBookMark
 }) => {
     return (
         <tr>
@@ -38,7 +38,7 @@ const User = ({
                 </button>
             </td>
         </tr>
-    );
-};
+    )
+}
 
-export default User;
+export default User
