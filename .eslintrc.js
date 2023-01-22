@@ -13,9 +13,13 @@ module.exports = {
     },
     plugins: ['react'],
     rules: {
-        semi: 0 = off,
-        jsxBracketSameLine: false,
+        semi: 0,
+        jsxBracketSameLine: 0,
         indent: ['error', 4],
-        singleQuote: true
+        singleQuote: 0,
+        'space-before-function-paren': [
+            'error',
+            { anonymous: 'always', named: 'never' }
+        ]
     }
 }
