@@ -36,7 +36,7 @@ const GroupList = ({
                             'list-group-item' +
                             (item === selectedItem ? ' active' : '')
                         }
-                        onClick={() => onItemSelect(items[item])}
+                        onClick={() => onItemSelect(item)}
                         role="button"
                     >
                         {item[contentProperty]}

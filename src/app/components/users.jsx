@@ -8,15 +8,16 @@ import GroupList from './groupList'
 import SearchStatus from './searchStatus'
 
 const Users = ({ users: allUsers, ...rest }) => {
+    console.log(allUsers)
     const [currentPage, setCurrentPage] = useState(1)
     const [professions, setProfession] = useState()
     const [selectedProf, setSelectedProf] = useState()
-
     const pageSize = 4
 
     useEffect(() => {
         api.professions.fetchAll().then((date) => setProfession(date))
     }, [])
+
     useEffect(() => {
         setCurrentPage(1)
     }, [selectedProf])
@@ -30,7 +31,11 @@ const Users = ({ users: allUsers, ...rest }) => {
     }
 
     const filteredIUsers = selectedProf
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter(
+              (user) =>
+                  JSON.stringify(user.profession) ===
+                  JSON.stringify(selectedProf)
+          )
         : allUsers
 
     const count = filteredIUsers.length
