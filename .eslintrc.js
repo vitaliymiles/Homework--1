@@ -4,16 +4,22 @@ module.exports = {
         es2021: true
     },
     extends: ['plugin:react/recommended', 'standard'],
-    overrides: [],
     parserOptions: {
-        ecmaVersion: 'latest',
+        ecmaFeatures: {
+            jsx: true
+        },
+        ecmaVersion: 12,
         sourceType: 'module'
     },
     plugins: ['react'],
     rules: {
+        semi: 0,
+        jsxBracketSameLine: 0,
         indent: ['error', 4],
-        singleQuote: true,
-        jsxBracketSameLine: false,
-        semi: false
+        singleQuote: 0,
+        'space-before-function-paren': [
+            'error',
+            { anonymous: 'always', named: 'never' }
+        ]
     }
 }
