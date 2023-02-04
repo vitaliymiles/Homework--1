@@ -15,7 +15,7 @@ module.exports = {
     rules: {
         semi: 0,
         jsxBracketSameLine: 0,
-        indent: ['error', 4],
+        indent: ['off'],
         singleQuote: 0,
         'space-before-function-paren': [
             'error',

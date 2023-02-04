@@ -6,31 +6,27 @@ import User from './user'
 import api from '../api'
 import GroupList from './groupList'
 import SearchStatus from './searchStatus'
-
 const Users = ({ users: allUsers, ...rest }) => {
-    console.log(allUsers)
     const [currentPage, setCurrentPage] = useState(1)
     const [professions, setProfession] = useState()
     const [selectedProf, setSelectedProf] = useState()
-    const pageSize = 4
 
+    const pageSize = 2
     useEffect(() => {
-        api.professions.fetchAll().then((date) => setProfession(date))
+        api.professions.fetchAll().then((data) => setProfession(data))
     }, [])
-
     useEffect(() => {
         setCurrentPage(1)
     }, [selectedProf])
 
-    const hendleProfessionSelect = (item) => {
+    const handleProfessionSelect = (item) => {
         setSelectedProf(item)
     }
 
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex)
     }
-
-    const filteredIUsers = selectedProf
+    const filteredUsers = selectedProf
         ? allUsers.filter(
               (user) =>
                   JSON.stringify(user.profession) ===
@@ -38,9 +34,8 @@ const Users = ({ users: allUsers, ...rest }) => {
           )
         : allUsers
 
-    const count = filteredIUsers.length
-    const usersCrop = paginate(filteredIUsers, currentPage, pageSize)
-
+    const count = filteredUsers.length
+    const usersCrop = paginate(filteredUsers, currentPage, pageSize)
     const clearFilter = () => {
         setSelectedProf()
     }
@@ -52,12 +47,13 @@ const Users = ({ users: allUsers, ...rest }) => {
                     <GroupList
                         selectedItem={selectedProf}
                         items={professions}
-                        onItemSelect={hendleProfessionSelect}
+                        onItemSelect={handleProfessionSelect}
                     />
                     <button
                         className="btn btn-secondary mt-2"
                         onClick={clearFilter}
                     >
+                        {' '}
                         Очистить
                     </button>
                 </div>
@@ -70,7 +66,7 @@ const Users = ({ users: allUsers, ...rest }) => {
                             <tr>
                                 <th scope="col">Имя</th>
                                 <th scope="col">Качества</th>
-                                <th scope="col">Провфессия</th>
+                                <th scope="col">Профессия</th>
                                 <th scope="col">Встретился, раз</th>
                                 <th scope="col">Оценка</th>
                                 <th scope="col">Избранное</th>
