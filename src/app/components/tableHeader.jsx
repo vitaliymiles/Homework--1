@@ -2,16 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
+    console.log('TableHeader', selectedSort)
+    const caretSort = (selectedSort, currentPath) => {
+        if (selectedSort.path !== currentPath) {
+            return false
+        }
+
+        if (selectedSort.order === 'asc') {
+            return 'up'
+        } else {
+            return 'down'
+        }
+    }
     const handleSort = (item) => {
         if (selectedSort.path === item) {
             onSort({
                 ...selectedSort,
                 order: selectedSort.order === 'asc' ? 'desc' : 'asc'
-            })
+            }) // Фильтрация списка по направлениям.
         } else {
             onSort({ path: item, order: 'asc' })
         }
     }
+
     return (
         <thead>
             <tr>
@@ -26,24 +39,16 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         {...{ role: columns[column].path && 'button' }}
                         scope="col"
                     >
-                        {columns[column].name}
-                    </th>
-                ))}
+                        <span className="pe-2">{columns[column].name}</span>
 
-                {/* <th scope="col">Качества</th>
-                <th onClick={() => handleSort('profession.name')} scope="col">
-                    Профессия
-                </th>
-                <th onClick={() => handleSort('completedMeetings')} scope="col">
-                    Встретился, раз
-                </th>
-                <th onClick={() => handleSort('rate')} scope="col">
-                    Оценка
-                </th>
-                <th onClick={() => handleSort('buokmark')} scope="col">
-                    Избранное
-                </th>
-                <th /> */}
+                        <i
+                            className={`bi bi-caret-${caretSort(
+                                selectedSort,
+                                columns[column].path
+                            )}-fill`}
+                        ></i>
+                    </th> // Динамическое отображение таблицы.
+                ))}
             </tr>
         </thead>
     )

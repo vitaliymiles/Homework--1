@@ -13,7 +13,10 @@ const UserTable = ({
     ...rest
 }) => {
     const columns = {
-        name: { path: 'name', name: 'Имя' },
+        name: {
+            path: 'name',
+            name: 'Имя'
+        },
         qualities: {
             name: 'Качества',
             component: (user) => <QualitiesList qualities={user.qualities} />
@@ -42,7 +45,7 @@ const UserTable = ({
                 >
                     delete
                 </button>
-            )
+            ) // отображение имен столбцов с ключем (path) для фильтрации и компоненты на букмарк и кнопку удалить.
         }
     }
     return (

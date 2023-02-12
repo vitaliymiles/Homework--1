@@ -31,9 +31,7 @@ const Users = () => {
                 return user
             })
         )
-        // console.log(id)
-    }
-    // const handleSortingIndex = (item) => {}
+    } // перебор юзеров по id для определения нажатие на букмарк.
 
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data))
