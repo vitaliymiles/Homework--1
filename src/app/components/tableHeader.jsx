@@ -2,9 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
-    console.log('TableHeader', selectedSort)
     const caretSort = (selectedSort, currentPath) => {
-        if (selectedSort.path !== currentPath) {
+        if (!currentPath || selectedSort.path !== currentPath) {
             return false
         }
 
