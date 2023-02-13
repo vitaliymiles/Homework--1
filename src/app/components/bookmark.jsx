@@ -6,7 +6,7 @@ const BookMark = ({ status, ...rest }) => {
             <i className={'bi bi-bookmark' + (status ? '-heart-fill' : '')}></i>
         </button>
     )
-}
+} // Динамическое отображение статуса избранного.
 BookMark.propTypes = {
     status: PropTypes.bool
 }
