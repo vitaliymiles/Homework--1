@@ -15,4 +15,5 @@ const QualitiesList = ({ qualities }) => {
 QualitiesList.propTypes = {
     qualities: PropTypes.array
 }
+
 export default QualitiesList
