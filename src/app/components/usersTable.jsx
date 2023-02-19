@@ -27,8 +27,8 @@ const UserTable = ({
             name: 'Встретился, раз'
         },
         rate: { path: 'rate', name: 'Оценка' },
-        buokmark: {
-            path: 'buokmark',
+        bookmark: {
+            path: 'bookmark',
             name: 'Избранное',
             component: (user) => (
                 <BookMark
