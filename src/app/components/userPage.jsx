@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import api from '../api'
 import QualitiesList from './qualitiesList'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
-const UserPage = ({ userId }) => {
+const UserPage = () => {
+    const { userId } = useParams()
     const history = useHistory()
     const [user, setUser] = useState()
+    console.log(userId)
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data))
     })
@@ -30,7 +32,7 @@ const UserPage = ({ userId }) => {
 }
 
 UserPage.propTypes = {
-    userId: PropTypes.string.isRequired
+    userId: PropTypes.string
 }
 
 export default UserPage
