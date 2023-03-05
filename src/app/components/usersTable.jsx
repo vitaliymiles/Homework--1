@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import BookMark from './bookmark'
 import QualitiesList from './qualitiesList'
 import Table from './table'
@@ -17,8 +18,8 @@ const UserTable = ({
         name: {
             path: 'name',
             name: 'Имя',
-            component: ({ _id, name }) => (
-                <Link to={`/users/${_id}`}>{name}</Link>
+            component: (user) => (
+                <Link to={`/users/${user._id}`}>{user.name}</Link>
             )
         },
         qualities: {

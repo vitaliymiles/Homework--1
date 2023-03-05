@@ -149,6 +149,7 @@ const fetchAll = () =>
             resolve(users)
         }, 2000)
     })
+
 const getById = (id) =>
     new Promise((resolve) => {
         window.setTimeout(function () {
