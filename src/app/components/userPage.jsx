@@ -8,10 +8,11 @@ const UserPage = () => {
     const { userId } = useParams()
     const history = useHistory()
     const [user, setUser] = useState()
-    console.log(userId)
+
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data))
     })
+
     const handleClick = () => {
         history.push('/users')
     }
