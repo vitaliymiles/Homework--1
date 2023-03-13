@@ -7,10 +7,12 @@ import GroupList from './groupList'
 import SearchStatus from './searchStatus'
 import UserTable from './usersTable'
 import _ from 'lodash'
+import TextField from './textField'
 const UsersList = () => {
-    const [currentPage, setCurrentPage] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1) // первая страница пагинации
     const [professions, setProfession] = useState()
     const [selectedProf, setSelectedProf] = useState()
+    const [nameRequest, setnameRequest] = useState('') // пустая строка в поисковой форме.
     const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' })
     const pageSize = 8
 
@@ -40,9 +42,15 @@ const UsersList = () => {
     }, [selectedProf])
 
     const handleProfessionSelect = (item) => {
+        if (nameRequest !== '') setnameRequest('')
+        // Очищает форму поиска при нажатии на поиск по профессии.
         setSelectedProf(item)
     }
-
+    const handleChange = ({ target }) => {
+        setSelectedProf(undefined)
+        // Отчищает фильтр по профессии при вводе новых даных в форму поиска.
+        setnameRequest(target.value)
+    }
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex)
     }
@@ -51,7 +59,14 @@ const UsersList = () => {
     }
 
     if (users) {
-        const filteredUsers = selectedProf
+        const filteredUsers = nameRequest
+            ? users.filter(
+                  (user) =>
+                      user.name
+                          .toLowerCase()
+                          .indexOf(nameRequest.toLowerCase()) !== -1
+              )
+            : selectedProf // Сам метод поиска. toLowerCase возвращает в нижнем регистре поступающие данные и имена для лучшего поиска. indexOf находит первые совпадающие символы. В случае если нет поиска возвращается исходная таблица.
             ? users.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
@@ -84,12 +99,20 @@ const UsersList = () => {
                             onClick={clearFilter}
                         >
                             {' '}
-                            Очиститть
+                            Очистить
                         </button>
                     </div>
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <form action="">
+                        <TextField
+                            placeholder="Search..."
+                            name="search"
+                            value={nameRequest}
+                            onChange={handleChange}
+                        />
+                    </form>
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
