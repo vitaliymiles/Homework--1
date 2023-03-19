@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { paginate } from '../utils/paginate'
-import Pagination from './pagination'
-import api from '../api'
-import GroupList from './groupList'
-import SearchStatus from './searchStatus'
-import UserTable from './usersTable'
+import { paginate } from '../../../utils/paginate'
+import Pagination from '../../common/pagination'
+import api from '../../../api'
+import GroupList from '../../common/groupList'
+import SearchStatus from '../../ui/searchStatus'
+import UserTable from '../../ui/usersTable'
 import _ from 'lodash'
-import TextField from './textField'
-const UsersList = () => {
-    const [currentPage, setCurrentPage] = useState(1) // первая страница пагинации
+const UsersListPage = () => {
+    const [currentPage, setCurrentPage] = useState(1)
     const [professions, setProfession] = useState()
+    const [searchQuery, setSearchQuery] = useState('')
     const [selectedProf, setSelectedProf] = useState()
-    const [nameRequest, setnameRequest] = useState('') // пустая строка в поисковой форме.
     const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' })
     const pageSize = 8
 
@@ -39,18 +38,17 @@ const UsersList = () => {
 
     useEffect(() => {
         setCurrentPage(1)
-    }, [selectedProf])
+    }, [selectedProf, searchQuery])
 
     const handleProfessionSelect = (item) => {
-        if (nameRequest !== '') setnameRequest('')
-        // Очищает форму поиска при нажатии на поиск по профессии.
+        if (searchQuery !== '') setSearchQuery('')
         setSelectedProf(item)
     }
-    const handleChange = ({ target }) => {
+    const handleSearchQuery = ({ target }) => {
         setSelectedProf(undefined)
-        // Отчищает фильтр по профессии при вводе новых даных в форму поиска.
-        setnameRequest(target.value)
+        setSearchQuery(target.value)
     }
+
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex)
     }
@@ -59,14 +57,14 @@ const UsersList = () => {
     }
 
     if (users) {
-        const filteredUsers = nameRequest
+        const filteredUsers = searchQuery
             ? users.filter(
                   (user) =>
                       user.name
                           .toLowerCase()
-                          .indexOf(nameRequest.toLowerCase()) !== -1
+                          .indexOf(searchQuery.toLowerCase()) !== -1
               )
-            : selectedProf // Сам метод поиска. toLowerCase возвращает в нижнем регистре поступающие данные и имена для лучшего поиска. indexOf находит первые совпадающие символы. В случае если нет поиска возвращается исходная таблица.
+            : selectedProf
             ? users.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
@@ -105,14 +103,13 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
-                    <form action="">
-                        <TextField
-                            placeholder="Search..."
-                            name="search"
-                            value={nameRequest}
-                            onChange={handleChange}
-                        />
-                    </form>
+                    <input
+                        type="text"
+                        name="searchQuery"
+                        placeholder="Search..."
+                        onChange={handleSearchQuery}
+                        value={searchQuery}
+                    />
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
@@ -136,8 +133,8 @@ const UsersList = () => {
     }
     return 'loading...'
 }
-UsersList.propTypes = {
+UsersListPage.propTypes = {
     users: PropTypes.array
 }
 
-export default UsersList
+export default UsersListPage
