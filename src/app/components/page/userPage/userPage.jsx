@@ -11,8 +11,9 @@ const UserPage = ({ userId }) => {
         api.users.getById(userId).then((data) => setUser(data))
     }, [])
     const handleClick = () => {
-        history.push('/users')
+        history.push(`/users/${userId}/edit`)
     }
+
     if (user) {
         return (
             <div>
@@ -21,7 +22,7 @@ const UserPage = ({ userId }) => {
                 <Qualities qualities={user.qualities} />
                 <p>completedMeetings: {user.completedMeetings}</p>
                 <h2>Rate: {user.rate}</h2>
-                <button onClick={handleClick}> Все Пользователи</button>
+                <button onClick={handleClick}>Изменить</button>
             </div>
         )
     } else {
@@ -34,3 +35,7 @@ UserPage.propTypes = {
 }
 
 export default UserPage
+
+// const handleClick = () => {
+//     history.push(`/users/${userId}/edit?`)
+// }
