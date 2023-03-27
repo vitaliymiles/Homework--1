@@ -1,11 +1,20 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import RegisterForm from '../components/ui/registerForm'
 
 const Edit = () => {
-    const { edit } = useParams()
-    if (edit) {
-        return <h1>Edit</h1>
-    }
+    return (
+        <div className="container mt-5">
+            <div className="row">
+                <div className="col-md-6 offset-md-3 shadow p-4">
+                    <>
+                        <RegisterForm />
+                    </>
+                    <button>Изменить</button>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default Edit
+// user={user}

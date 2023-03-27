@@ -6,10 +6,12 @@ import { useHistory } from 'react-router-dom'
 
 const UserPage = ({ userId }) => {
     const history = useHistory()
+    // console.log('history', history)
     const [user, setUser] = useState()
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data))
     }, [])
+    // console.log(userId)
     const handleClick = () => {
         history.push(`/users/${userId}/edit`)
     }
@@ -35,7 +37,3 @@ UserPage.propTypes = {
 }
 
 export default UserPage
-
-// const handleClick = () => {
-//     history.push(`/users/${userId}/edit?`)
-// }
