@@ -6,7 +6,6 @@ import SelectField from '../common/form/selectField'
 import RadioField from '../common/form/radioField'
 import MultiSelectField from '../common/form/multiSelectField'
 import CheckBoxField from '../common/form/checkBoxField'
-import { useParams } from 'react-router-dom'
 
 const RegisterForm = () => {
     const [data, setData] = useState({
@@ -20,18 +19,6 @@ const RegisterForm = () => {
     const [qualities, setQualities] = useState([])
     const [professions, setProfession] = useState([])
     const [errors, setErrors] = useState({})
-    const [user, setUser] = useState()
-    console.log('data', data)
-    console.log('user', user)
-    const { userId } = useParams()
-
-    useEffect(() => {
-        api.users.getById(userId).then((data) => setUser(data))
-    }, [])
-
-    useEffect(() => {
-        api.users.updata(data).then((data) => setData(data))
-    }, [user])
 
     const getProfessionById = (id) => {
         for (const prof of professions) {

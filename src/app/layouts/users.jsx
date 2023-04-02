@@ -5,8 +5,6 @@ import UsersListPage from '../components/page/usersListPage'
 import Edit from './edit'
 const Users = () => {
     const { userId, edit } = useParams()
-    console.log('id', userId)
-    console.log('edit', edit)
     if (userId && !edit) {
         return (
             <>
