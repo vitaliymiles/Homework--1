@@ -6,17 +6,13 @@ import { useHistory } from 'react-router-dom'
 
 const UserPage = ({ userId }) => {
     const history = useHistory()
-    console.log('history', history)
     const [user, setUser] = useState()
-    console.log('user', user)
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data))
     }, [])
-
     const handleClick = () => {
-        history.push(`/users/${userId}/edit`)
+        history.push('/users')
     }
-
     if (user) {
         return (
             <div>
@@ -25,7 +21,7 @@ const UserPage = ({ userId }) => {
                 <Qualities qualities={user.qualities} />
                 <p>completedMeetings: {user.completedMeetings}</p>
                 <h2>Rate: {user.rate}</h2>
-                <button onClick={handleClick}>Изменить</button>
+                <button onClick={handleClick}> Все Пользователи</button>
             </div>
         )
     } else {
