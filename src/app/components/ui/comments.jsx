@@ -1,33 +1,28 @@
-import React, { useEffect, useState } from 'react'
 import { orderBy } from 'lodash'
-import API from '../../../api'
+import React, { useEffect, useState } from 'react'
+import api from '../../api'
 import { useParams } from 'react-router-dom'
-import CommentList from '../../common/comments/commentList'
-import AddCommentForm from '../../common/comments/addCommentForm'
+import CommentsList, { AddCommentForm } from '../common/comments'
 
 const Comments = () => {
     const { userId } = useParams()
     const [comments, setComments] = useState([])
-
     useEffect(() => {
-        API.comments.fetchCommentsForUser(userId).then((data) => {
-            setComments(data)
-        })
-    }, []) // запрашиваем комментарии в API через fetchCommentsForUser
-
+        api.comments
+            .fetchCommentsForUser(userId)
+            .then((data) => setComments(data))
+    }, [])
     const handleSubmit = (data) => {
-        API.comments
+        api.comments
             .add({ ...data, pageId: userId })
             .then((data) => setComments([...comments, data]))
     }
-
-    const hendleRemoveComment = (id) => {
-        API.comments.remove(id).then((id) => {
-            setComments(comments.filter((n) => n._id !== id))
+    const handleRemoveComment = (id) => {
+        api.comments.remove(id).then((id) => {
+            setComments(comments.filter((x) => x._id !== id))
         })
     }
-
-    const sortedComments = orderBy(comments, ['created_at'], ['desc']) // сортировка комментариев
+    const sortedComments = orderBy(comments, ['created_at'], ['desc'])
     return (
         <>
             <div className="card mb-2">
@@ -41,9 +36,9 @@ const Comments = () => {
                     <div className="card-body ">
                         <h2>Comments</h2>
                         <hr />
-                        <CommentList
+                        <CommentsList
                             comments={sortedComments}
-                            onRemove={hendleRemoveComment}
+                            onRemove={handleRemoveComment}
                         />
                     </div>
                 </div>

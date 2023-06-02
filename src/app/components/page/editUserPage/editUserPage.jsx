@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { validator } from '../../utils/validator'
-import api from '../../api'
-import SelectField from '../common/form/selectField'
-import TextField from '../common/form/textField'
-import RadioField from '../common/form/radioField'
-import MultiSelectField from '../common/form/multiSelectField'
-import BackHistoryButton from '../common/backButton'
+import { validator } from '../../../utils/validator'
+import api from '../../../api'
+import TextField from '../../common/form/textField'
+import SelectField from '../../common/form/selectField'
+import RadioField from '../../common/form/radioField'
+import MultiSelectField from '../../common/form/multiSelectField'
+import BackHistoryButton from '../../common/backButton'
 
-const EditUserForm = () => {
+const EditUserPage = () => {
     const { userId } = useParams()
     const history = useHistory()
     const [isLoading, setIsLoading] = useState(false)
     const [data, setData] = useState({
         name: '',
         email: '',
-        profession: ''
+        profession: '',
+        sex: 'male',
+        qualities: []
     })
     const [professions, setProfession] = useState([])
     const [qualities, setQualities] = useState([])
     const [errors, setErrors] = useState({})
-
     const getProfessionById = (id) => {
         for (const prof of professions) {
             if (prof.value === id) {
@@ -74,23 +75,21 @@ const EditUserForm = () => {
                 profession: profession._id
             }))
         )
-        api.qualities.fetchAll().then((data) =>
-            setQualities(
-                Object.keys(data).map((qualitie) => ({
-                    label: data[qualitie].name,
-                    value: data[qualitie]._id,
-                    color: data[qualitie].color
-                }))
-            )
-        )
-        api.professions.fetchAll().then((data) =>
-            setProfession(
-                Object.keys(data).map((profession) => ({
-                    label: data[profession].name,
-                    value: data[profession]._id
-                }))
-            )
-        )
+        api.professions.fetchAll().then((data) => {
+            const professionsList = Object.keys(data).map((professionName) => ({
+                label: data[professionName].name,
+                value: data[professionName]._id
+            }))
+            setProfession(professionsList)
+        })
+        api.qualities.fetchAll().then((data) => {
+            const qualitiesList = Object.keys(data).map((optionName) => ({
+                value: data[optionName]._id,
+                label: data[optionName].name,
+                color: data[optionName].color
+            }))
+            setQualities(qualitiesList)
+        })
     }, [])
     useEffect(() => {
         if (data._id) setIsLoading(false)
@@ -191,4 +190,4 @@ const EditUserForm = () => {
     )
 }
 
-export default EditUserForm
+export default EditUserPage
